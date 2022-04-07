@@ -30,7 +30,7 @@ function App() {
           <Route exact path='/' element={<Home />} />
           <Route exact path='/login' element={<Login loginHandler={loginHandler}/>} />
           <Route exact path= '/logout' element={<Logout />} />
-          <Route exact path='/quizpage' element={<QuizLandingPage />} />
+          <Route exact path='/quizpage' element={<QuizLandingPage userDetails={userDetails} />} />
         </Routes>
       </BrowserRouter>
     </div>
