@@ -30,29 +30,29 @@ connectDB();
 app.get('/', (req, res) => {
     res.send("Inside backend");
 });
+//Register not needed in thsi iteration of the website
+// app.get('/register', (req, res) => {
+//     res.send("Register test")
+// });
 
-app.get('/register', (req, res) => {
-    res.send("Register test")
-});
+// app.post('/api/register', async (req, res) => {
+//     const hashedPassword = await bcrypt.hash(req.body.userPassword, 10);
+//     try {
+//         await User.create({
+//             name: req.body.userName,
+//             email: req.body.userEmail,
+//             password: hashedPassword
+//         });
 
-app.post('/api/register', async (req, res) => {
-    const hashedPassword = await bcrypt.hash(req.body.userPassword, 10);
-    try {
-        await User.create({
-            name: req.body.userName,
-            email: req.body.userEmail,
-            password: hashedPassword
-        });
+//         res.json({
+//             message: "User registered"
+//         });
+//     } catch (error) {
+//         console.log(error)
+//     }
+// });
 
-        res.json({
-            message: "User registered"
-        });
-    } catch (error) {
-        console.log(error)
-    }
-});
-
-
+//User info if required
 app.get('/api/user', check.isLoggedIn, async (req, res) => {
     try {
         const user = req.userFound._id;
@@ -62,7 +62,9 @@ app.get('/api/user', check.isLoggedIn, async (req, res) => {
           name: userDB.name,
           email: userDB.email,
           id: userDB._id,
-          message: "User logged in",
+          editAccess: userDB.editAccess,
+          viewAccess: userDB.viewAccess,
+          restrictedAccess: userDB.restrictedAccess
         });
 
     } catch (error) {
@@ -75,6 +77,7 @@ app.get('/api/user', check.isLoggedIn, async (req, res) => {
     }
 });
 
+//Login
 app.get('/login', (req, res) => {
 
 });
@@ -110,10 +113,13 @@ app.post('/api/login', async (req, res) => {
         } 
         
 });
- 
-app.get('/logout', check.logout, (req, res) => {
+
+//Logout 
+app.get('/logout', (req, res) => {
     res.json({ message: 'please work' });
 });
+
+
 
 // Port
 const Port = 5000;

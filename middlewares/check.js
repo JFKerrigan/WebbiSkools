@@ -16,11 +16,14 @@ exports.isLoggedIn = async (req, res, next) => {
 };
 //<----------------LOG THE CURRENT USER OUT-------------------------->
 
-exports.logout = (req, res, next) => {
-  res.cookie("userCookie", "logout", {
-    expires: new Date(Date.now() + 2 * 1000),
-    httpOnly: true
-  });
+exports.logout = async (req, res, next) => {
+const options = {
+  expires: new Date(Date.now() = 10000),
+  httpOnly: true,
+}
+
+  res.cookie("userCookie", "expiredToken", options);
+  res.status(200).json({ status: success})
 
   next();
 };

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 
-const Login = () => {
+const Login = (props) => {
     const [userDetails, setUserDetails] = useState({
         userName: '',
         userEmail: '',
@@ -33,6 +33,7 @@ const Login = () => {
           };
 
         const loginSuccess = await axios.post('/api/login', body, config);
+   
         
         setUserDetails({
             ...userDetails,
@@ -55,8 +56,13 @@ const Login = () => {
                 <label>Password</label>
                 <input required id="userPassword" name="userPassword" type="password" onChange={loginValues}/>
                 <br />
-                <button type="submit">Login</button>
-                { userDetails.message ? `You are ${userDetails.message}, hello, ${userDetails.userName}` :  null}
+                <button type="submit" 
+                    onClick={(e) => props.loginHandler(userDetails)}>
+                        Login
+                        </button>
+                { userDetails.message 
+                ? `You are ${userDetails.message}, hello, ${userDetails.userName}`
+                :  null }
             </form>
         </div>
     )
